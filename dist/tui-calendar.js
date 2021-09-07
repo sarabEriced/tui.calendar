@@ -21974,14 +21974,13 @@ ScheduleCreationPopup.prototype.render = function(viewModel) {
  */
 ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     var schedule = viewModel.schedule;
-    var title, isPrivate, location, startDate, endDate, isAllDay, state;
+    var title, isPrivate, startDate, endDate, isAllDay, state;
     var raw = schedule.raw || {};
     var calendars = this.calendars;
 
     var id = schedule.id;
     title = schedule.title;
     isPrivate = raw['class'] === 'private';
-    location = schedule.location;
     startDate = schedule.start;
     endDate = schedule.end;
     isAllDay = schedule.isAllDay;
@@ -21999,7 +21998,6 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         calendars: calendars,
         title: title,
         isPrivate: isPrivate,
-        location: location,
         isAllDay: isAllDay,
         state: state,
         start: startDate,
@@ -22333,7 +22331,6 @@ ScheduleCreationPopup.prototype._getRangeDate = function(startDate, endDate, isA
  * @param {{
     calendarId: {string},
     title: {string},
-    location: {string},
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean},
@@ -22344,11 +22341,10 @@ ScheduleCreationPopup.prototype._getRangeDate = function(startDate, endDate, isA
 ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     var changes = common.getScheduleChanges(
         this._schedule,
-        ['calendarId', 'title', 'location', 'start', 'end', 'isAllDay', 'state'],
+        ['calendarId', 'title', 'start', 'end', 'isAllDay', 'state'],
         {
             calendarId: form.calendarId,
             title: form.title.value,
-            location: form.location.value,
             start: form.start,
             end: form.end,
             isAllDay: form.isAllDay,
@@ -22381,7 +22377,6 @@ ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
  * @param {{
     calendarId: {string},
     title: {string},
-    location: {string},
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean},
@@ -22397,7 +22392,6 @@ ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
     this.fire('beforeCreateSchedule', {
         calendarId: form.calendarId,
         title: form.title.value,
-        location: form.location.value,
         raw: {
             class: form.isPrivate ? 'private' : 'public'
         },
