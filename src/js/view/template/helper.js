@@ -407,6 +407,10 @@ var helpers = {
         return 'Subject';
     },
 
+    'attendeesPlaceholder-tmpl': function() {
+        return 'Attendees';
+    },
+
     'locationPlaceholder-tmpl': function() {
         return 'Location';
     },
