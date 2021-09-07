@@ -1,6 +1,6 @@
 {
   "name": "tui-calendar",
-  "author": "NHN FE Development Lab <dl_javascript@nhn.com>",
+  "author": "Sara Barichello",
   "version": "1.14.1",
   "main": "dist/tui-calendar.js",
   "types": "index.d.ts",
@@ -8,7 +8,7 @@
   "description": "TOAST UI Calendar",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nhn/tui.calendar.git"
+    "url": "https://github.com/sarabEriced/tui.calendar.git"
   },
   "keywords": [
     "nhn",
