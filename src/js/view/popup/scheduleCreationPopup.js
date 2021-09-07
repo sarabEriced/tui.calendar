@@ -274,7 +274,6 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
     form = {
         calendarId: this._selectedCal ? this._selectedCal.id : null,
         title: title,
-        location: domutil.get(cssPrefix + 'schedule-location'),
         start: rangeDate.start,
         end: rangeDate.end,
         isAllDay: isAllDay,
