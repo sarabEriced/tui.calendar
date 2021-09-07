@@ -21881,7 +21881,7 @@ ScheduleCreationPopup.prototype._toggleIsPrivate = function(target) {
 ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
     var className = config.classname('popup-save');
     var cssPrefix = config.cssPrefix;
-    var title;
+    var title, attendees;
     var startDate;
     var endDate;
     var rangeDate;
@@ -21893,13 +21893,16 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
     }
 
     title = domutil.get(cssPrefix + 'schedule-title');
+    attendees = domutil.get(cssPrefix + 'schedule-user');
 
     startDate = new TZDate(this.rangePicker.getStartDate());
     endDate = new TZDate(this.rangePicker.getEndDate());
 
-    if (!this._validateForm(title, startDate, endDate)) {
+    if (!this._validateForm(title, attendees, startDate, endDate)) {
         if (!title.value) {
             title.focus();
+        } else if (!attendees.value) {
+            attendees.focus();
         }
 
         return false;
@@ -21911,11 +21914,13 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
     form = {
         calendarId: this._selectedCal ? this._selectedCal.id : null,
         title: title,
+        attendees: attendees,
+        // location: domutil.get(cssPrefix + 'schedule-location'),
         start: rangeDate.start,
         end: rangeDate.end,
-        isAllDay: isAllDay,
-        state: domutil.get(cssPrefix + 'schedule-state').innerText,
-        isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
+        isAllDay: isAllDay
+        // ,state: domutil.get(cssPrefix + 'schedule-state').innerText,
+        // isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
     };
 
     if (this._isEditMode) {
@@ -21974,17 +21979,19 @@ ScheduleCreationPopup.prototype.render = function(viewModel) {
  */
 ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     var schedule = viewModel.schedule;
-    var title, isPrivate, startDate, endDate, isAllDay, state;
-    var raw = schedule.raw || {};
+    var title, attendees, startDate, endDate, isAllDay; // isPrivate, location, state;
+    // var raw = schedule.raw || {};
     var calendars = this.calendars;
 
     var id = schedule.id;
     title = schedule.title;
-    isPrivate = raw['class'] === 'private';
+    attendees = schedule.attendees;
+    // isPrivate = raw['class'] === 'private';
+    // location = schedule.location;
     startDate = schedule.start;
     endDate = schedule.end;
     isAllDay = schedule.isAllDay;
-    state = schedule.state;
+    // state = schedule.state;
 
     viewModel.selectedCal = this._selectedCal = common.find(this.calendars, function(cal) {
         return cal.id === viewModel.schedule.calendarId;
@@ -21997,14 +22004,16 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         selectedCal: this._selectedCal,
         calendars: calendars,
         title: title,
-        isPrivate: isPrivate,
+        attendees: attendees,
+        // isPrivate: isPrivate,
+        // location: location,
         isAllDay: isAllDay,
-        state: state,
+        // state: state,
         start: startDate,
         end: endDate,
-        raw: {
-            class: isPrivate ? 'private' : 'public'
-        },
+        // raw: {
+        //     class: isPrivate ? 'private' : 'public'
+        // },
         zIndex: this.layer.zIndex + 5,
         isEditMode: this._isEditMode
     };
@@ -22116,14 +22125,14 @@ ScheduleCreationPopup.prototype._getYAndArrowDirection = function(
 };
 
 /**
-* Get calculate rendering x position and arrow left by guide block elements
-* @param {number} guideBoundLeft - guide block's left
-* @param {number} guideBoundRight - guide block's right
-* @param {number} layerWidth - popup layer's width
-* @param {number} containerLeft - container's left
-* @param {number} containerRight - container's right
-* @returns {XAndArrowLeft} x and arrowLeft
-*/
+ * Get calculate rendering x position and arrow left by guide block elements
+ * @param {number} guideBoundLeft - guide block's left
+ * @param {number} guideBoundRight - guide block's right
+ * @param {number} layerWidth - popup layer's width
+ * @param {number} containerLeft - container's left
+ * @param {number} containerRight - container's right
+ * @returns {XAndArrowLeft} x and arrowLeft
+ */
 ScheduleCreationPopup.prototype._getXAndArrowLeft = function(
     guideBoundLeft,
     guideBoundRight,
@@ -22283,12 +22292,17 @@ ScheduleCreationPopup.prototype.setCalendars = function(calendars) {
 /**
  * Validate the form
  * @param {string} title title of then entered schedule
+ * @param {string} attendees event partecipants
  * @param {TZDate} startDate start date time from range picker
  * @param {TZDate} endDate end date time from range picker
  * @returns {boolean} Returns false if the form is not valid for submission.
  */
-ScheduleCreationPopup.prototype._validateForm = function(title, startDate, endDate) {
+ScheduleCreationPopup.prototype._validateForm = function(title, attendees, startDate, endDate) {
     if (!title.value) {
+        return false;
+    }
+
+    if (!attendees.value) {
         return false;
     }
 
@@ -22331,24 +22345,26 @@ ScheduleCreationPopup.prototype._getRangeDate = function(startDate, endDate, isA
  * @param {{
     calendarId: {string},
     title: {string},
+    attendees: {string},
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean},
-    state: {string},
-    isPrivate: {boolean}
   }} form schedule input form data
-*/
+ */ // location: {string}, state: {string}, isPrivate: {boolean}
+
 ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     var changes = common.getScheduleChanges(
         this._schedule,
-        ['calendarId', 'title', 'start', 'end', 'isAllDay', 'state'],
+        ['calendarId', 'title', 'attendees', 'start', 'end', 'isAllDay'], // , 'location', 'state'
         {
             calendarId: form.calendarId,
             title: form.title.value,
+            attendees: form.attendees.value,
+            // location: form.location.value,
             start: form.start,
             end: form.end,
-            isAllDay: form.isAllDay,
-            state: form.state
+            isAllDay: form.isAllDay
+            // ,state: form.state
         }
     );
 
@@ -22377,12 +22393,12 @@ ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
  * @param {{
     calendarId: {string},
     title: {string},
+    attendees: {string},
     start: {TZDate},
     end: {TZDate},
-    isAllDay: {boolean},
-    state: {string}
+    isAllDay: {boolean}
   }} form schedule input form data
- */
+ */ // location: {string},state: {string}
 ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
     /**
      * @event ScheduleCreationPopup#beforeCreateSchedule
@@ -22392,13 +22408,15 @@ ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
     this.fire('beforeCreateSchedule', {
         calendarId: form.calendarId,
         title: form.title.value,
-        raw: {
-            class: form.isPrivate ? 'private' : 'public'
-        },
+        attendees: form.attendees.value,
+        // location: form.location.value,
+        // raw: {
+        //     class: form.isPrivate ? 'private' : 'public'
+        // },
         start: form.start,
         end: form.end,
-        isAllDay: form.isAllDay,
-        state: form.state
+        isAllDay: form.isAllDay
+        // , state: form.state
     });
 };
 
