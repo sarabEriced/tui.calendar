@@ -1,4 +1,4 @@
-<div class="{{CSS_PREFIX}}popup">
+<div class="{{CSS_PREFIX}}popup"> <!--Allargare select selezione del calendario-->
     <div class="{{CSS_PREFIX}}popup-container">
         <div class="{{CSS_PREFIX}}popup-section {{CSS_PREFIX}}dropdown {{CSS_PREFIX}}close {{CSS_PREFIX}}section-calendar{{#unless calendars.length}} {{CSS_PREFIX}}hide{{/unless}}">
             <button class="{{CSS_PREFIX}}button {{CSS_PREFIX}}dropdown-button {{CSS_PREFIX}}popup-section-item">
@@ -17,13 +17,17 @@
         </div>
         <div class="{{CSS_PREFIX}}popup-section">
             <div class="{{CSS_PREFIX}}popup-section-item {{CSS_PREFIX}}section-title">
-            <span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-title"></span>
+                <span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-title"></span>
                 <input id="{{CSS_PREFIX}}schedule-title" class="{{CSS_PREFIX}}content" placeholder="{{titlePlaceholder-tmpl}}" value="{{title}}">
             </div>
+            <button id="{{CSS_PREFIX}}schedule-private" class="{{CSS_PREFIX}}button {{CSS_PREFIX}}section-private{{#unless isPrivate}} {{CSS_PREFIX}}public{{/unless}}">
+                <span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-private"></span>
+            </button>
         </div>
+
         <div class="{{CSS_PREFIX}}popup-section">
             <div class="{{CSS_PREFIX}}popup-section-item {{CSS_PREFIX}}section-title">
-            <span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-user-b"></span>
+                <span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-user-b"></span>
                 <input id="{{CSS_PREFIX}}schedule-user" class="{{CSS_PREFIX}}content" placeholder="{{attendeesPlaceholder-tmpl}}" value="{{attendees}}">
             </div>
         </div>
@@ -46,7 +50,9 @@
             </div>
         </div>
         <button class="{{CSS_PREFIX}}button {{CSS_PREFIX}}popup-close"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-close"></span></button>
-        <div class="{{CSS_PREFIX}}section-button-save"><button class="{{CSS_PREFIX}}button {{CSS_PREFIX}}confirm {{CSS_PREFIX}}popup-save"><span>{{#if isEditMode}}{{{popupUpdate-tmpl}}}{{else}}{{{popupSave-tmpl}}}{{/if}}</span></button></div>
+        <div class="{{CSS_PREFIX}}section-button-save">
+            <button class="{{CSS_PREFIX}}button {{CSS_PREFIX}}confirm {{CSS_PREFIX}}popup-save"><span>{{#if isEditMode}}{{{popupUpdate-tmpl}}}{{else}}{{{popupSave-tmpl}}}{{/if}}</span></button>
+        </div>
     </div>
     <div id="{{CSS_PREFIX}}popup-arrow" class="{{CSS_PREFIX}}popup-arrow {{CSS_PREFIX}}arrow-bottom">
         <div class="{{CSS_PREFIX}}popup-arrow-border">

@@ -281,9 +281,9 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
         // location: domutil.get(cssPrefix + 'schedule-location'),
         start: rangeDate.start,
         end: rangeDate.end,
-        isAllDay: isAllDay
+        isAllDay: isAllDay,
+        isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
         // ,state: domutil.get(cssPrefix + 'schedule-state').innerText,
-        // isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
     };
 
     if (this._isEditMode) {
@@ -342,14 +342,14 @@ ScheduleCreationPopup.prototype.render = function(viewModel) {
  */
 ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     var schedule = viewModel.schedule;
-    var title, attendees, startDate, endDate, isAllDay; // isPrivate, location, state;
-    // var raw = schedule.raw || {};
+    var title, isPrivate, attendees, startDate, endDate, isAllDay; // , location, state;
+    var raw = schedule.raw || {};
     var calendars = this.calendars;
 
     var id = schedule.id;
     title = schedule.title;
+    isPrivate = raw['class'] === 'private';
     attendees = schedule.attendees;
-    // isPrivate = raw['class'] === 'private';
     // location = schedule.location;
     startDate = schedule.start;
     endDate = schedule.end;
@@ -368,15 +368,15 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         calendars: calendars,
         title: title,
         attendees: attendees,
-        // isPrivate: isPrivate,
+        isPrivate: isPrivate,
         // location: location,
         isAllDay: isAllDay,
         // state: state,
         start: startDate,
         end: endDate,
-        // raw: {
-        //     class: isPrivate ? 'private' : 'public'
-        // },
+        raw: {
+            class: isPrivate ? 'private' : 'public'
+        },
         zIndex: this.layer.zIndex + 5,
         isEditMode: this._isEditMode
     };
@@ -712,8 +712,9 @@ ScheduleCreationPopup.prototype._getRangeDate = function(startDate, endDate, isA
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean},
+    isPrivate: {boolean}
   }} form schedule input form data
- */ // location: {string}, state: {string}, isPrivate: {boolean}
+ */ // location: {string}, state: {string}
 
 ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     var changes = common.getScheduleChanges(
@@ -773,9 +774,9 @@ ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
         title: form.title.value,
         attendees: form.attendees.value,
         // location: form.location.value,
-        // raw: {
-        //     class: form.isPrivate ? 'private' : 'public'
-        // },
+        raw: {
+            class: form.isPrivate ? 'private' : 'public'
+        },
         start: form.start,
         end: form.end,
         isAllDay: form.isAllDay
