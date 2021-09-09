@@ -249,7 +249,7 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
     var endDate;
     var rangeDate;
     var form;
-    var isAllDay;
+    var isAllDay, category;
 
     if (!domutil.hasClass(target, className) && !domutil.closest(target, '.' + className)) {
         return false;
@@ -273,7 +273,7 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
 
     isAllDay = !!domutil.get(cssPrefix + 'schedule-allday').checked;
     rangeDate = this._getRangeDate(startDate, endDate, isAllDay);
-
+    category = isAllDay ? 'allday' : 'time';
     form = {
         calendarId: this._selectedCal ? this._selectedCal.id : null,
         title: title,
@@ -282,6 +282,7 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
         start: rangeDate.start,
         end: rangeDate.end,
         isAllDay: isAllDay,
+        category: category,
         isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
         // ,state: domutil.get(cssPrefix + 'schedule-state').innerText,
     };
@@ -342,11 +343,12 @@ ScheduleCreationPopup.prototype.render = function(viewModel) {
  */
 ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     var schedule = viewModel.schedule;
-    var title, isPrivate, attendees, startDate, endDate, isAllDay; // , location, state;
+    // eslint-disable-next-line no-unused-vars
+    var category, title, isPrivate, attendees, startDate, endDate, isAllDay; // , location, state;
     var raw = schedule.raw || {};
     var calendars = this.calendars;
-
     var id = schedule.id;
+
     title = schedule.title;
     isPrivate = raw['class'] === 'private';
     attendees = schedule.attendees;
@@ -354,6 +356,7 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     startDate = schedule.start;
     endDate = schedule.end;
     isAllDay = schedule.isAllDay;
+    category = schedule.category;
     // state = schedule.state;
 
     viewModel.selectedCal = this._selectedCal = common.find(this.calendars, function(cal) {
@@ -371,6 +374,7 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         isPrivate: isPrivate,
         // location: location,
         isAllDay: isAllDay,
+        category: isAllDay ? 'allday' : 'time',
         // state: state,
         start: startDate,
         end: endDate,
@@ -712,14 +716,14 @@ ScheduleCreationPopup.prototype._getRangeDate = function(startDate, endDate, isA
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean},
+    category: {string},
     isPrivate: {boolean}
   }} form schedule input form data
  */ // location: {string}, state: {string}
 
 ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     var changes = common.getScheduleChanges(
-        this._schedule,
-        ['calendarId', 'title', 'attendees', 'start', 'end', 'isAllDay'], // , 'location', 'state'
+        this._schedule, ['calendarId', 'title', 'attendees', 'start', 'end', 'isAllDay', 'category'], // , 'location', 'state'
         {
             calendarId: form.calendarId,
             title: form.title.value,
@@ -727,7 +731,8 @@ ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
             // location: form.location.value,
             start: form.start,
             end: form.end,
-            isAllDay: form.isAllDay
+            isAllDay: form.isAllDay,
+            category: form.isAllDay ? 'allday' : 'time'
             // ,state: form.state
         }
     );
@@ -761,6 +766,7 @@ ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     start: {TZDate},
     end: {TZDate},
     isAllDay: {boolean}
+    category: {string}
   }} form schedule input form data
  */ // location: {string},state: {string}
 ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
@@ -779,7 +785,8 @@ ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
         },
         start: form.start,
         end: form.end,
-        isAllDay: form.isAllDay
+        isAllDay: form.isAllDay,
+        category: form.isAllDay ? 'allday' : 'time'
         // , state: form.state
     });
 };
