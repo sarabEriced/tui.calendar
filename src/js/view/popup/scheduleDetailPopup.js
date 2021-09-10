@@ -35,6 +35,11 @@ function ScheduleDetailPopup(container) {
     this._viewModel = null;
     this._schedule = null;
     this._calendar = null;
+    this._onClickListeners = [
+        this._onClickEditSchedule.bind(this),
+        this._closePopup.bind(this),
+        this._onClickDeleteSchedule.bind(this)
+    ];
 
     domevent.on(container, 'click', this._onClick, this);
 }
@@ -76,9 +81,13 @@ ScheduleDetailPopup.prototype.destroy = function() {
 ScheduleDetailPopup.prototype._onClick = function(clickEvent) {
     var target = domevent.getEventTarget(clickEvent);
 
-    this._onClickEditSchedule(target);
+    util.forEach(this._onClickListeners, function(listener) {
+        return !listener(target);
+    });
+    /* this._onClickEditSchedule(target);
 
     this._onClickDeleteSchedule(target);
+    this._closePopup(target);*/
 };
 
 /**
@@ -99,6 +108,22 @@ ScheduleDetailPopup.prototype._onClickEditSchedule = function(target) {
     }
 };
 
+/**
+ * Test click event target is close button, and return layer is closed(hidden)
+ * @param {HTMLElement} target click event target
+ * @returns {boolean} whether popup layer is closed or not
+ */
+ScheduleDetailPopup.prototype._closePopup = function(target) {
+    var className = config.classname('popup-close');
+
+    if (domutil.hasClass(target, className) || domutil.closest(target, '.' + className)) {
+        this.hide();
+
+        return true;
+    }
+
+    return false;
+};
 /**
  * @fires ScheduleDetailPopup#clickEditSchedule
  * @param {HTMLElement} target - event target
