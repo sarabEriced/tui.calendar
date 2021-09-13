@@ -73,6 +73,7 @@ ScheduleDetailPopup.prototype.destroy = function() {
     View.prototype.destroy.call(this);
 };
 
+/* Modificata da Sara il 10/09/2021 */
 /**
  * @override
  * Click event handler for close button
@@ -85,7 +86,6 @@ ScheduleDetailPopup.prototype._onClick = function(clickEvent) {
         return !listener(target);
     });
     /* this._onClickEditSchedule(target);
-
     this._onClickDeleteSchedule(target);
     this._closePopup(target);*/
 };
@@ -108,6 +108,7 @@ ScheduleDetailPopup.prototype._onClickEditSchedule = function(target) {
     }
 };
 
+/* Aggiunta da Sara il 10/09/2021 */
 /**
  * Test click event target is close button, and return layer is closed(hidden)
  * @param {HTMLElement} target click event target
@@ -121,9 +122,15 @@ ScheduleDetailPopup.prototype._closePopup = function(target) {
 
         return true;
     }
+    // if () {
+    //     this.hide();
+    //
+    //     return true;
+    // }
 
     return false;
 };
+
 /**
  * @fires ScheduleDetailPopup#clickEditSchedule
  * @param {HTMLElement} target - event target
