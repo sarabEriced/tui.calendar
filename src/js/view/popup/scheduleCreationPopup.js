@@ -48,7 +48,7 @@ function ScheduleCreationPopup(container, calendars, usageStatistics) {
         this._closeDropdownMenuView.bind(this, null),
         this._closePopup.bind(this),
         this._toggleIsAllday.bind(this),
-        // this._toggleIsPrivate.bind(this),
+        this._toggleIsPrivate.bind(this),
         this._onClickSaveSchedule.bind(this)
     ];
 
@@ -217,7 +217,7 @@ ScheduleCreationPopup.prototype._toggleIsAllday = function(target) {
  * @param {HTMLElement} target click event target
  * @returns {boolean} whether event target is private section or not
  */
-/* ScheduleCreationPopup.prototype._toggleIsPrivate = function(target) {
+ScheduleCreationPopup.prototype._toggleIsPrivate = function(target) {
     var className = config.classname('section-private');
     var privateSection = domutil.hasClass(target, className) ? target : domutil.closest(target, '.' + className);
 
@@ -233,7 +233,6 @@ ScheduleCreationPopup.prototype._toggleIsAllday = function(target) {
 
     return false;
 };
-*/
 
 /**
  * Save new schedule if user clicked save button
@@ -284,7 +283,7 @@ ScheduleCreationPopup.prototype._onClickSaveSchedule = function(target) {
         end: rangeDate.end,
         isAllDay: isAllDay,
         category: category
-        // , isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
+        // ,isPrivate: !domutil.hasClass(domutil.get(cssPrefix + 'schedule-private'), config.classname('public'))
         // ,state: domutil.get(cssPrefix + 'schedule-state').innerText,
     };
 
@@ -345,13 +344,13 @@ ScheduleCreationPopup.prototype.render = function(viewModel) {
 ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
     var schedule = viewModel.schedule;
     // eslint-disable-next-line no-unused-vars
-    var category, title, attendees, startDate, endDate, isAllDay; // , isPrivate, location, state;
-    // var raw = schedule.raw || {};
+    var category, title, isPrivate, attendees, startDate, endDate, isAllDay; // , location, state;
+    var raw = schedule.raw || {};
     var calendars = this.calendars;
     var id = schedule.id;
 
     title = schedule.title;
-    // isPrivate = raw['class'] === 'private';
+    isPrivate = raw['class'] === 'private';
     attendees = schedule.attendees;
     // location = schedule.location;
     startDate = schedule.start;
@@ -372,7 +371,7 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         calendars: calendars,
         title: title,
         attendees: attendees,
-        // isPrivate: isPrivate,
+        isPrivate: isPrivate,
         // location: location,
         isAllDay: isAllDay,
         category: isAllDay ? 'allday' : 'time',
@@ -380,7 +379,7 @@ ScheduleCreationPopup.prototype._makeEditModeData = function(viewModel) {
         start: startDate,
         end: endDate,
         raw: {
-            // class: isPrivate ? 'private' : 'public'
+            class: isPrivate ? 'private' : 'public'
         },
         zIndex: this.layer.zIndex + 5,
         isEditMode: this._isEditMode
@@ -746,7 +745,7 @@ ScheduleCreationPopup.prototype._onClickUpdateSchedule = function(form) {
     this.fire('beforeUpdateSchedule', {
         schedule: util.extend({
             raw: {
-                // class: form.isPrivate ? 'private' : 'public'
+                class: form.isPrivate ? 'private' : 'public'
             }
         }, this._schedule),
         changes: changes,
@@ -782,7 +781,7 @@ ScheduleCreationPopup.prototype._onClickCreateSchedule = function(form) {
         attendees: form.attendees.value,
         // location: form.location.value,
         raw: {
-            // class: form.isPrivate ? 'private' : 'public'
+            class: form.isPrivate ? 'private' : 'public'
         },
         start: form.start,
         end: form.end,
