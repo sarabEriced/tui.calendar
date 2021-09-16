@@ -1,71 +1,77 @@
 <div class="{{CSS_PREFIX}}popup {{CSS_PREFIX}}popup-detail">
-  <div class="{{CSS_PREFIX}}popup-container">
-    <div class="{{CSS_PREFIX}}popup-section {{CSS_PREFIX}}section-header">
-      <div>
-        <span class="{{CSS_PREFIX}}schedule-private {{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-private"></span>
-        <span class="{{CSS_PREFIX}}schedule-title">{{schedule.title}}</span>
-      </div>
-      <div class="{{CSS_PREFIX}}popup-detail-date {{CSS_PREFIX}}content">{{{popupDetailDate-tmpl schedule.isAllDay schedule.start schedule.end}}}</div>
-        <button id="btn-close-popup-detail" class="{{CSS_PREFIX}}button {{CSS_PREFIX}}popup-close"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-close"></span></button>
-    </div>
-    <div class="{{CSS_PREFIX}}section-detail">
-        {{#if schedule.location}}<div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-location-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailLocation-tmpl schedule}}}</span></div>{{/if}}
-        {{#if schedule.recurrenceRule}}<div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-repeat-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailRepeat-tmpl schedule}}}</span></div>{{/if}}
-        {{#if schedule.attendees}}<div class="{{CSS_PREFIX}}popup-detail-item {{CSS_PREFIX}}popup-detail-item-indent"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-user-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailUser-tmpl schedule}}}</span></div>{{/if}}
-        {{#if schedule.state}}<div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-state-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailState-tmpl schedule}}}</span></div>{{/if}}
-        {{#if calendar}}
-        <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}calendar-dot" style="background-color: {{schedule.bgColor}}"></span><span class="{{CSS_PREFIX}}content">{{calendar.name}}</span></div>
-        {{/if}}
-        {{#if schedule.body}}<div class="{{CSS_PREFIX}}popup-detail-item {{CSS_PREFIX}}popup-detail-item-separate"><span class="{{CSS_PREFIX}}content">{{{popupDetailBody-tmpl schedule}}}</span></div>{{/if}}
-
-        <div ng-if="editor.resource.insertTrace||editor.resource.lastUpdateTrace" class="ml10"
-             uib-popover-template="'fpnet-popoverTrace.html'" popover-trigger="'mouseenter'"
-             popover-class="popover-tracciabilita" popover-placement="auto top-right">
-            <i class="fa fa-info-circle fa-lock-height"></i>
+    <div class="{{CSS_PREFIX}}popup-container">
+        <div class="{{CSS_PREFIX}}popup-section {{CSS_PREFIX}}section-header">
+            <div>
+                <span class="{{CSS_PREFIX}}schedule-private {{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-private"></span>
+                <span class="{{CSS_PREFIX}}schedule-title">{{schedule.title}}</span>
+            </div>
+            <div class="{{CSS_PREFIX}}popup-detail-date {{CSS_PREFIX}}content">{{{popupDetailDate-tmpl schedule.isAllDay schedule.start schedule.end}}}</div>
+            <button id="btn-close-popup-detail" class="{{CSS_PREFIX}}button {{CSS_PREFIX}}popup-close"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-close"></span></button>
         </div>
-        <!--<div class="row">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-if="editor.resource.insertTrace">
-                    <div class="row p10" style="background-color: #bee9f1;">
-                        <center><span><strong>Inserim.</strong></span></center>
-                    </div>
-                    <div class="row p10"><i class="fa fa-user"></i> {{editor.resource.insertTrace.userName}}</div>
-                    <div class="row pl10 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.insertTrace.timeStamp}}</div>
-                    <div class="row pl10 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.insertTrace.timeStamp}}</div>
-                </div>
+        <div class="{{CSS_PREFIX}}section-detail">
+            {{#if schedule.location}}
+                <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-location-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailLocation-tmpl schedule}}}</span></div>{{/if}}
+            {{#if schedule.recurrenceRule}}
+                <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-repeat-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailRepeat-tmpl schedule}}}</span></div>{{/if}}
+            {{#if schedule.attendees}}
+                <div class="{{CSS_PREFIX}}popup-detail-item {{CSS_PREFIX}}popup-detail-item-indent"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-user-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailUser-tmpl schedule}}}</span></div>{{/if}}
+            {{#if schedule.state}}
+                <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-state-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailState-tmpl schedule}}}</span></div>{{/if}}
+            {{#if calendar}}
+                <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}calendar-dot" style="background-color: {{schedule.bgColor}}"></span><span class="{{CSS_PREFIX}}content">{{calendar.name}}</span></div>
+            {{/if}}
+            {{#if schedule.body}}
+                <div class="{{CSS_PREFIX}}popup-detail-item {{CSS_PREFIX}}popup-detail-item-separate"><span class="{{CSS_PREFIX}}content">{{{popupDetailBody-tmpl schedule}}}</span></div>{{/if}}
 
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-if="editor.resource.lastUpdateTrace" style="border-left: 1px solid gray;">
-                    <div class="row p10" style="background-color: #bee9f1;">
-                        <center><span><strong>Modifica</strong></span></center>
-                    </div>
-                    <div class="row p20 pt10 pb10"><i class="fa fa-user"></i> {{editor.resource.lastUpdateTrace.userName}}</div>
-                    <div class="row pl20 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
-                    <div class="row pl20 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
-                </div>
 
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" ng-if="editor.resource.deleteTrace" style="border-left: 1px solid gray;">
-                    <div class="row p10" style="background-color: #bee9f1;">
-                        <center><span><strong>Cancell.</strong></span></center>
-                    </div>
-                    <div class="row p20 pt10 pb10"><i class="fa fa-user"></i> {{editor.resource.deleteTrace.userName}}</div>
-                    <div class="row pl20 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
-                    <div class="row pl20 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
+            <any ng-if="editor.resource.insertTrace||editor.resource.lastUpdateTrace">
+                <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" data-toggle="collapse" data-target="#collapseInfo"><i class="fa fa-info-circle" style="font-size: 18px"></i></div>
                 </div>
-            </div>-->
+                <div class="row collapse" id="collapseInfo">
+                    <div class="panel" style="margin: 0px">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.insertTrace">
+                            <div class="row p10" style="background-color: #bee9f1;">
+                                <center><span><strong>Inserim.</strong></span></center>
+                            </div>
+                            <div class="row p10"><i class="fa fa-user"></i> {{editor.resource.insertTrace.userName}}</div>
+                            <div class="row pl10 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.insertTrace.timeStamp}}</div>
+                            <div class="row pl10 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.insertTrace.timeStamp}}</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.lastUpdateTrace" style="border-left: 1px solid gray;">
+                            <div class="row p10" style="background-color: #bee9f1;">
+                                <center><span><strong>Modifica</strong></span></center>
+                            </div>
+                            <div class="row p20 pt10 pb10"><i class="fa fa-user"></i> {{editor.resource.lastUpdateTrace.userName}}</div>
+                            <div class="row pl20 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
+                            <div class="row pl20 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.deleteTrace" style="border-left: 1px solid gray;">
+                            <div class="row p10" style="background-color: #bee9f1;">
+                                <center><span><strong>Cancell.</strong></span></center>
+                            </div>
+                            <div class="row p20 pt10 pb10"><i class="fa fa-user"></i> {{editor.resource.deleteTrace.userName}}</div>
+                            <div class="row pl20 pr10 pt0"><i class="fa fa-calendar"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
+                            <div class="row pl20 pr10 pt0"><i class="fa fa-clock-o"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
+                        </div>
+                    </div>
+                </div>
+            </any>
 
+        </div>
+        {{#if schedule.isReadOnly}}
+        {{else}}
+            <div class="{{CSS_PREFIX}}section-button">
+                <button class="{{CSS_PREFIX}}popup-edit"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-edit"></span><span class="{{CSS_PREFIX}}content">{{{popupEdit-tmpl}}}</span></button>
+                <div class="{{CSS_PREFIX}}popup-vertical-line"></div>
+                <button class="{{CSS_PREFIX}}popup-delete"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-delete"></span><span class="{{CSS_PREFIX}}content">{{{popupDelete-tmpl}}}</span></button>
+            </div>
+        {{/if}}
     </div>
-    {{#if schedule.isReadOnly}}
-    {{else}}
-    <div class="{{CSS_PREFIX}}section-button">
-      <button class="{{CSS_PREFIX}}popup-edit"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-edit"></span><span class="{{CSS_PREFIX}}content">{{{popupEdit-tmpl}}}</span></button>
-      <div class="{{CSS_PREFIX}}popup-vertical-line"></div>
-      <button class="{{CSS_PREFIX}}popup-delete"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-delete"></span><span class="{{CSS_PREFIX}}content">{{{popupDelete-tmpl}}}</span></button>
+    <div class="{{CSS_PREFIX}}popup-top-line" style="background-color: {{schedule.bgColor}}"></div>
+    <div id="{{CSS_PREFIX}}popup-arrow" class="{{CSS_PREFIX}}popup-arrow {{CSS_PREFIX}}arrow-left">
+        <div class="{{CSS_PREFIX}}popup-arrow-border">
+            <div class="{{CSS_PREFIX}}popup-arrow-fill"></div>
+        </div>
     </div>
-    {{/if}}
-  </div>
-  <div class="{{CSS_PREFIX}}popup-top-line" style="background-color: {{schedule.bgColor}}"></div>
-  <div id="{{CSS_PREFIX}}popup-arrow" class="{{CSS_PREFIX}}popup-arrow {{CSS_PREFIX}}arrow-left">
-    <div class="{{CSS_PREFIX}}popup-arrow-border">
-        <div class="{{CSS_PREFIX}}popup-arrow-fill"></div>
-    </div>
-  </div>
 </div>
