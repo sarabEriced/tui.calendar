@@ -8,7 +8,7 @@
             <div class="{{CSS_PREFIX}}popup-detail-date {{CSS_PREFIX}}content">{{{popupDetailDate-tmpl schedule.isAllDay schedule.start schedule.end}}}</div>
             <button id="btn-close-popup-detail" class="{{CSS_PREFIX}}button {{CSS_PREFIX}}popup-close"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-close"></span></button>
         </div>
-        <div class="{{CSS_PREFIX}}section-detail">
+        <div class="{{CSS_PREFIX}}section-detail" id="popupDetailSection">
             {{#if schedule.location}}
                 <div class="{{CSS_PREFIX}}popup-detail-item"><span class="{{CSS_PREFIX}}icon {{CSS_PREFIX}}ic-location-b"></span><span class="{{CSS_PREFIX}}content">{{{popupDetailLocation-tmpl schedule}}}</span></div>{{/if}}
             {{#if schedule.recurrenceRule}}
