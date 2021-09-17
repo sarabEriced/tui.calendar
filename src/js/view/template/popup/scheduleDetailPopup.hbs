@@ -22,42 +22,6 @@
             {{/if}}
             {{#if schedule.body}}
                 <div class="{{CSS_PREFIX}}popup-detail-item {{CSS_PREFIX}}popup-detail-item-separate"><span class="{{CSS_PREFIX}}content">{{{popupDetailBody-tmpl schedule}}}</span></div>{{/if}}
-
-
-            <any ng-if="editor.resource.insertTrace||editor.resource.lastUpdateTrace">
-                <div class="row">
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" data-toggle="collapse" data-target="#collapseInfo"><i class="fa fa-info-circle" style="font-size: 13px"></i></div>
-                </div>
-                <div class="row collapse" id="collapseInfo">
-                    <div class="panel" style="margin: 0px 10px 0px 10px">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.insertTrace">
-                            <div class="row" style="background-color: #bee9f1; padding: 2px">
-                                <center><span><strong>Inserim.</strong></span></center>
-                            </div>
-                            <div class="row" style="padding: 5px"><i class="fa fa-user"></i> {{editor.resource.insertTrace.userName}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-calendar"></i> {{editor.resource.insertTrace.timeStamp}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-clock-o"></i> {{editor.resource.insertTrace.timeStamp}}</div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.lastUpdateTrace" style="border-left: 1px solid gray;">
-                            <div class="row" style="background-color: #bee9f1; padding: 2px">
-                                <center><span><strong>Modifica</strong></span></center>
-                            </div>
-                            <div class="row" style="padding: 5px"><i class="fa fa-user"></i> {{editor.resource.lastUpdateTrace.userName}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-calendar"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-clock-o"></i> {{editor.resource.lastUpdateTrace.timeStamp}}</div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-if="editor.resource.deleteTrace" style="border-left: 1px solid gray;">
-                            <div class="row" style="background-color: #bee9f1; padding: 2px">
-                                <center><span><strong>Cancell.</strong></span></center>
-                            </div>
-                            <div class="row" style="padding: 5px"><i class="fa fa-user"></i> {{editor.resource.deleteTrace.userName}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-calendar"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
-                            <div class="row" style="padding: 0px 5px 0px 5px"><i class="fa fa-clock-o"></i> {{editor.resource.deleteTrace.timeStamp}}</div>
-                        </div>
-                    </div>
-                </div>
-            </any>
-
         </div>
         {{#if schedule.isReadOnly}}
         {{else}}
