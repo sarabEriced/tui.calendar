@@ -242,3 +242,7 @@ body {
   text-align: center;
   color: #000;
 }
+
+.scheduleDeleted {
+  text-decoration: line-through;
+}
