@@ -1,4 +1,4 @@
-sarabEriced's version: 1.20.27
+sarabEriced's version: 1.20.28
 
 # ![TOAST UI Calendar](https://user-images.githubusercontent.com/26706716/39230183-7f8ff186-48a0-11e8-8d9c-9699d2d0e471.png)
 
