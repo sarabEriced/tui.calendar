@@ -1,6 +1,6 @@
 /*!
  * TOAST UI Calendar
- * @version 1.14.1 | Fri Sep 24 2021
+ * @version 1.14.1 | Tue Oct 05 2021
  * @author Sara Barichello
  * @license MIT
  */
@@ -24220,9 +24220,9 @@ module.exports = (Handlebars['default'] || Handlebars).template({"1":function(co
 
   return "                                color: #ffffff;\n                                background-color: "
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? lookupProperty(depth0,"model") : depth0)) != null ? lookupProperty(stack1,"color") : stack1), depth0))
-    + "\n";
+    + "\n                            /*";
 },"31":function(container,depth0,helpers,partials,data) {
-    return "                                color:#333;\n";
+    return "*/\n                                /*color:#333;*/\n";
 },"33":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=container.lambda, alias2=container.escapeExpression, alias3=depth0 != null ? depth0 : (container.nullContext || {}), alias4=container.hooks.helperMissing, alias5="function", lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
